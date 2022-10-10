@@ -28,6 +28,12 @@ namespace AgendamentoEventos.Data.Mappings
                 .HasColumnName("Value")
                 .HasColumnType("DECIMAL(7, 2)");
 
+            builder.Property(e => e.TicketLimit)
+                .IsRequired()
+                .HasColumnName("TicketLimit")
+                .HasColumnType("INTEGER")
+                .HasDefaultValue(0);
+
             builder.Property(e => e.Description)
                 .IsRequired()
                 .HasColumnName("Description")
@@ -37,12 +43,12 @@ namespace AgendamentoEventos.Data.Mappings
             builder.Property(e => e.StartDate)
                 .IsRequired()
                 .HasColumnName("StartDate")
-                .HasColumnType("SMALLDATETIME");
+                .HasColumnType("DATE");
 
             builder.Property(e => e.FinalDate)
                 .IsRequired()
                 .HasColumnName("FinalDate")
-                .HasColumnType("SMALLDATETIME");
+                .HasColumnType("DATE");
 
             builder.Property(e => e.Timestamps)
                 .IsRequired()

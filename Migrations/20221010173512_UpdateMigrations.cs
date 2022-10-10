@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AgendamentoEventos.Migrations
 {
-    public partial class InitialCreation : Migration
+    public partial class UpdateMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace AgendamentoEventos.Migrations
                     PhoneNumber = table.Column<string>(type: "NVARCHAR(15)", maxLength: 15, nullable: false),
                     Email = table.Column<string>(type: "NVARCHAR(80)", maxLength: 80, nullable: false),
                     Password = table.Column<string>(type: "NVARCHAR(80)", maxLength: 80, nullable: false),
-                    Timestamps = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false, defaultValue: new DateTime(2022, 10, 9, 19, 9, 44, 282, DateTimeKind.Utc).AddTicks(2776))
+                    TypeUser = table.Column<string>(type: "NVARCHAR(12)", maxLength: 12, nullable: false, defaultValue: "Participant"),
+                    Timestamps = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false, defaultValue: new DateTime(2022, 10, 10, 17, 35, 12, 451, DateTimeKind.Utc).AddTicks(2897))
                 },
                 constraints: table =>
                 {
@@ -34,10 +35,11 @@ namespace AgendamentoEventos.Migrations
                     OrganizerId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "NVARCHAR(80)", maxLength: 80, nullable: false),
                     Value = table.Column<decimal>(type: "DECIMAL(7,2)", nullable: false),
+                    TicketLimit = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 0),
                     Description = table.Column<string>(type: "NVARCHAR(250)", maxLength: 250, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false),
-                    FinalDate = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false),
-                    Timestamps = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false, defaultValue: new DateTime(2022, 10, 9, 19, 9, 44, 264, DateTimeKind.Utc).AddTicks(9900))
+                    StartDate = table.Column<DateTime>(type: "DATE", nullable: false),
+                    FinalDate = table.Column<DateTime>(type: "DATE", nullable: false),
+                    Timestamps = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false, defaultValue: new DateTime(2022, 10, 10, 17, 35, 12, 435, DateTimeKind.Utc).AddTicks(2392))
                 },
                 constraints: table =>
                 {
@@ -60,8 +62,8 @@ namespace AgendamentoEventos.Migrations
                     ParticipantId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR(80)", maxLength: 80, nullable: false),
                     Cpf = table.Column<string>(type: "NVARCHAR(11)", maxLength: 11, nullable: false),
-                    Status = table.Column<string>(type: "NVARCHAR(2)", maxLength: 2, nullable: false),
-                    Timestamps = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false, defaultValue: new DateTime(2022, 10, 9, 19, 9, 44, 280, DateTimeKind.Utc).AddTicks(972))
+                    Status = table.Column<string>(type: "NVARCHAR(12)", maxLength: 12, nullable: false, defaultValue: "Comprado"),
+                    Timestamps = table.Column<DateTime>(type: "SMALLDATETIME", nullable: false, defaultValue: new DateTime(2022, 10, 10, 17, 35, 12, 448, DateTimeKind.Utc).AddTicks(3152))
                 },
                 constraints: table =>
                 {

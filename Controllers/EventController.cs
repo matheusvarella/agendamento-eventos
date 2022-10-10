@@ -2,9 +2,9 @@
 using AgendamentoEventos.Extensions;
 using AgendamentoEventos.Models;
 using AgendamentoEventos.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace AgendamentoEventos.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Organizer")]
     public class EventController : ControllerBase
     {
         [HttpGet("events")]
@@ -31,8 +32,8 @@ namespace AgendamentoEventos.Controllers
 
         [HttpGet("events/{id:int}")]
         public async Task<IActionResult> GetByIdAsync(
-            [FromServices] AgendamentoEventosDataContext context,
-            [FromRoute] int id)
+            [FromServices]AgendamentoEventosDataContext context,
+            [FromRoute]int id)
         {
             try
             {
@@ -41,13 +42,13 @@ namespace AgendamentoEventos.Controllers
                     .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (item == null)
-                    return NotFound(new ResultViewModel<Event>("Evento não encontrado."));
+                    return NotFound(new ResultViewModel<string>("Evento não encontrado."));
 
                 return Ok(new ResultViewModel<Event>(item));
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<Event>("Falha interna no servidor."));
+                return StatusCode(500, new ResultViewModel<string>("Falha interna no servidor."));
             }
         }
 
@@ -61,27 +62,31 @@ namespace AgendamentoEventos.Controllers
 
             try
             {
+                if (model.StartDate > model.FinalDate)
+                    return NotFound(new ResultViewModel<string>("Datas informadas para o evento inválidas."));
+
+
                 var item = new Event
                 {
-                    Id = 0,
-                    Title = model.Title,
+                    Title = model.Title.Trim(),
                     Value = model.Value,
-                    Description = model.Description,
-                    StartDate = model.StartDate,
-                    FinalDate = model.FinalDate,
+                    TicketLimit = model.TicketLimit,
+                    Description = model.Description.Trim(),
+                    StartDate = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day),
+                    FinalDate = new DateTime(model.FinalDate.Year, model.FinalDate.Month, model.FinalDate.Day),
                 };
                 await context.Events.AddAsync(item);
                 await context.SaveChangesAsync();
 
-                return Created($"events/{item.Id}", item);
+                return Created($"events/{item.Id}", new ResultViewModel<Event>(item));
             }
             catch (DbUpdateException ex)
             {
-                return StatusCode(500, "Não foi possível incluir o evento.");
+                return StatusCode(500, new ResultViewModel<string>("Não foi possível incluir o evento." + ex.InnerException));
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<Event>("Falha interna no servidor."));
+                return StatusCode(500, new ResultViewModel<string>("Falha interna no servidor."));
             }
         }
 

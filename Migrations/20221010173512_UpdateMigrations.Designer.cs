@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendamentoEventos.Migrations
 {
     [DbContext(typeof(AgendamentoEventosDataContext))]
-    [Migration("20221009190944_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20221010173512_UpdateMigrations")]
+    partial class UpdateMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,20 +37,26 @@ namespace AgendamentoEventos.Migrations
                         .HasColumnName("Description");
 
                     b.Property<DateTime>("FinalDate")
-                        .HasColumnType("SMALLDATETIME")
+                        .HasColumnType("DATE")
                         .HasColumnName("FinalDate");
 
                     b.Property<int>("OrganizerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("SMALLDATETIME")
+                        .HasColumnType("DATE")
                         .HasColumnName("StartDate");
+
+                    b.Property<int>("TicketLimit")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0)
+                        .HasColumnName("TicketLimit");
 
                     b.Property<DateTime>("Timestamps")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("SMALLDATETIME")
-                        .HasDefaultValue(new DateTime(2022, 10, 9, 19, 9, 44, 264, DateTimeKind.Utc).AddTicks(9900))
+                        .HasDefaultValue(new DateTime(2022, 10, 10, 17, 35, 12, 435, DateTimeKind.Utc).AddTicks(2392))
                         .HasColumnName("Timestamps");
 
                     b.Property<string>("Title")
@@ -99,14 +105,16 @@ namespace AgendamentoEventos.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("NVARCHAR(2)")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(12)
+                        .HasColumnType("NVARCHAR(12)")
+                        .HasDefaultValue("Comprado")
                         .HasColumnName("Status");
 
                     b.Property<DateTime>("Timestamps")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("SMALLDATETIME")
-                        .HasDefaultValue(new DateTime(2022, 10, 9, 19, 9, 44, 280, DateTimeKind.Utc).AddTicks(972))
+                        .HasDefaultValue(new DateTime(2022, 10, 10, 17, 35, 12, 448, DateTimeKind.Utc).AddTicks(3152))
                         .HasColumnName("Timestamps");
 
                     b.HasKey("Id");
@@ -157,8 +165,16 @@ namespace AgendamentoEventos.Migrations
                     b.Property<DateTime>("Timestamps")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("SMALLDATETIME")
-                        .HasDefaultValue(new DateTime(2022, 10, 9, 19, 9, 44, 282, DateTimeKind.Utc).AddTicks(2776))
+                        .HasDefaultValue(new DateTime(2022, 10, 10, 17, 35, 12, 451, DateTimeKind.Utc).AddTicks(2897))
                         .HasColumnName("Timestamps");
+
+                    b.Property<string>("TypeUser")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(12)
+                        .HasColumnType("NVARCHAR(12)")
+                        .HasDefaultValue("Participant")
+                        .HasColumnName("TypeUser");
 
                     b.HasKey("Id");
 

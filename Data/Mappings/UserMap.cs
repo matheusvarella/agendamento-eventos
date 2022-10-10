@@ -41,6 +41,13 @@ namespace AgendamentoEventos.Data.Mappings
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(80);
 
+            builder.Property(e => e.TypeUser)
+                .IsRequired()
+                .HasColumnName("TypeUser")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(12)
+                .HasDefaultValue("Participant");
+
             builder.Property(e => e.Timestamps)
                 .IsRequired()
                 .HasColumnName("Timestamps")

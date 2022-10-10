@@ -33,7 +33,8 @@ namespace AgendamentoEventos.Data.Mappings
                 .IsRequired()
                 .HasColumnName("Status")
                 .HasColumnType("NVARCHAR")
-                .HasMaxLength(2);
+                .HasMaxLength(12)
+                .HasDefaultValue("Comprado");
 
             builder.Property(e => e.Timestamps)
                 .IsRequired()

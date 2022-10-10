@@ -9,7 +9,7 @@ namespace AgendamentoEventos.Models
         public int ParticipantId { get; set; }
         public string Name { get; set; }
         public string Cpf { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public DateTime Timestamps { get; set; }
 
         public Event Event { get; set; }

@@ -11,6 +11,7 @@ namespace AgendamentoEventos.Models
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string TypeUser { get; set; }
         public DateTime Timestamps { get; set; }
 
         public IList<Event> Events { get; set; }
